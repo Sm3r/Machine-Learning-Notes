@@ -1,28 +1,27 @@
 \section{Bayesian Networks}
 All probabilistic inference and learning methods are based on the repeated application of basic rules of probability theory.
 However, as the number of random variables increases, the complexity of representing and manipulating probability distributions grows exponentially.
-Probabilistic graphical models provide a convenient framework to represent and manipulate complex probability distributions.
-\\\\Bayesian Networks (BNs) are a formalism to represent probabilistic relationships among a set of random variables.
-They allow to:
+Probabilistic graphical models provide a convenient framework to represent and manipulate complex probability distributions. Bayesian Networks (BNs) are a formalism to represent probabilistic relationships among a set of random variables. They allow one to:
 \begin{itemize}
     \item Visualize the structure of a probabilistic model;
     \item Discover properties of the model (e.g., conditional independencies);
     \item Efficiently perform probabilistic inference and learning, using the structure of the graph;
     \item Represent multiple distributions with the same graph, independently of their qualitative aspects
-    (e.g., discrete vs continuous variables).
+    (e.g., discrete versus continuous variables).
 \end{itemize}
 
 \subsection{Bayesian Networks structure}
 A Bayesian Network (BN) structure $\mathcal{G}$ is a directed acyclic graph (DAG) where:
 \begin{itemize}
     \item Each node represents a random variable;
-    \item Each directed edge represent a direct dependency between the two connected variables;
+    \item Each directed edge represents a direct dependency between the connected variables;
 \end{itemize}
-It's important to note that the absence of an edge between two nodes doesn't imply independence.
-\\\\The given structure $\mathcal{G}$ of a BN encodes these independence assumptions:
+It is important to note that the absence of a direct edge between two nodes does not imply that the variables are unconditionally independent.
+
+The given structure $\mathcal{G}$ of a BN encodes these independence assumptions:
 \begin{equation}
     \label{eq:localIndependencies}
-    \mathcal{I}_l(\mathcal{G}) = \{ \forall i\; \boldsymbol{x}_i \perp \text{NonDescendants}_{\boldsymbol{x}_i} | \text{Parents}_{\boldsymbol{x}_i} \}
+    \mathcal{I}_l(\mathcal{G}) = \{ \forall i\; \boldsymbol{x}_i \perp \text{NonDescendants}_{\boldsymbol{x}_i} \mid \text{Parents}_{\boldsymbol{x}_i} \}
 \end{equation}
 Each variable $\boldsymbol{x}_i$ is independent of its non-descendants given its parents. 
 
@@ -47,9 +46,10 @@ Each variable $\boldsymbol{x}_i$ is independent of its non-descendants given its
     \draw[bn-arrow] (x4) -- (x7);
     \draw[bn-arrow] (x5) -- (x7);
     \end{tikzpicture}
-    \caption{Example of Bayesian Network}
+    \caption{Example of Bayesian Network.}
 \end{figure}
 \subsubsection{Independency Map}
+\begin{figure}[H]
 \definition{Independency Map}{
     \begin{itemize}
         \item Let $p$ be a distribution over a set of random variables $\boldsymbol{X}$;
@@ -59,34 +59,35 @@ Each variable $\boldsymbol{x}_i$ is independent of its non-descendants given its
     the local independencies encoded in $\mathcal{G}$:
     \[ \mathcal{I}_l(\mathcal{G}) \subseteq \mathcal{I}(p) \]
 }
+\end{figure}
 This means that all independencies encoded in the graph $\mathcal{G}$ hold in the distribution $p$.
 There can be additional independencies in $p$ that are not encoded in $\mathcal{G}$.
 
 \subsubsection{Factorization}
 We say that a distribution $p$ \textbf{factorizes} according to a BN structure $\mathcal{G}$ if $p$ can be expressed as:
-\[ p(\boldsymbol{x}_1, \boldsymbol{x}_2, \ldots, \boldsymbol{x}_m) = \prod_{i=1}^{m} p(\boldsymbol{x}_i | \text{Parents}_{\boldsymbol{x}_i}) \]
+\[ p(\boldsymbol{x}_1, \boldsymbol{x}_2, \ldots, \boldsymbol{x}_m) = \prod_{i=1}^{m} p(\boldsymbol{x}_i \mid \text{Parents}_{\boldsymbol{x}_i}) \]
 We have that $\mathcal{G}$ is an I-map for $p$ if and only if $p$ factorizes according to $\mathcal{G}$.
 \begin{proof}
 (\textit{I-Map}$\Rightarrow$\textit{Factorization}) 
 \begin{itemize}
     \item Assume that $\mathcal{G}$ is an I-map for $p$;
     \item We know that $p$ satisfies the local independencies encoded in $\mathcal{G}$:
-    \[ \{\forall i\; \boldsymbol{x}_i \perp \text{NonDescendants}_{\boldsymbol{x}_i} | \text{Parents}_{\boldsymbol{x}_i} \}\]
+    \[ \{\forall i\; \boldsymbol{x}_i \perp \text{NonDescendants}_{\boldsymbol{x}_i} \mid \text{Parents}_{\boldsymbol{x}_i} \}\]
     \item We can order the variables in a topological order, such that each variable always comes after its parents;
     \item We can decompose the joint distribution using the chain rule of probability:
-    \[ p(x_1, x_2, \ldots, x_m) = \prod_{i=1}^{m} p(x_i | x_1, x_2, \ldots, x_{i-1}) \]
+    \[ p(x_1, x_2, \ldots, x_m) = \prod_{i=1}^{m} p(x_i \mid x_1, x_2, \ldots, x_{i-1}) \]
     \item Since we ordered the variables in a topological order, now $\text{Parents}_{x_i} \subseteq \{x_1, x_2, \ldots, x_{i-1}\}$.
     We derive that:
-    \[ p(x_i | x_1, x_2, \ldots, x_{i-1}) = p(x_i | \text{Parents}_{x_i}) \]
+    \[ p(x_i \mid x_1, x_2, \ldots, x_{i-1}) = p(x_i \mid \text{Parents}_{x_i}) \]
 \end{itemize}
 Combining the last two equations, we obtain the factorization property:
-\[ p(x_1, x_2, \ldots, x_m) = \prod_{i=1}^{m} p(x_i | \text{Parents}_{x_i}) \]
+\[ p(x_1, x_2, \ldots, x_m) = \prod_{i=1}^{m} p(x_i \mid \text{Parents}_{x_i}) \]
 
 (\textit{Factorization}$\Rightarrow$\textit{I-Map}) 
 \begin{itemize}
     \item If $p$ factorizes according to $\mathcal{G}$, then the joint distribution can be expressed as:
     \[ p(x_1, x_2, \ldots, x_m) = \prod_{i=1}^{m} p(x_i | \text{Parents}_{x_i}) \]
-    \item Consider now the variable $x_m$; By the product rule ($p(X, Y) = p(Y|X) p(X)$), we can express the conditional distribution as:
+    \item Consider now the variable $x_m$. By the product rule ($p(X, Y) = p(Y\mid X) p(X)$), we can express the conditional distribution as:
     \[ p(x_m | x_1, x_2, \ldots, x_{m-1}) = \frac{p(x_1,\ldots, x_m)}{p(x_1, \ldots, x_{m-1})} \]
     \item We can apply the sum rule to the denominator, marginalizing over $x_m$:
     \[ p(x_m | x_1, \ldots, x_{m-1}) = \frac{p(x_1,\ldots, x_m)}{\sum_{x_m} p(x_1,\ldots, x_m)} \]
@@ -95,7 +96,7 @@ Combining the last two equations, we obtain the factorization property:
     \item We can rearrange the equation isolating the term for $x_m$:
     \[ = \frac{p(x_m| \text{Parents}_{x_m}) \prod_{i=1}^{m-1} p(x_i | \text{Parents}_{x_i})}{\sum_{x_m} p(x_m| \text{Parents}_{x_m}) \prod_{i=1}^{m-1} p(x_i | \text{Parents}_{x_i})} \]
 \end{itemize}
-At this point we can simplify the equation, since $\sum_{x_m} p(x_m| \text{Parents}_{x_m}) = 1$, obtaining:
+We can subsequently simplify the equation, since $\sum_{x_m} p(x_m| \text{Parents}_{x_m}) = 1$, obtaining:
 \[
 p(x_m | x_1, \ldots, x_{m-1}) = p(x_m| \text{Parents}_{x_m})
 \]
@@ -123,7 +124,7 @@ Consider the following BN structure:
     \draw[bn-arrow] (A) -- (C);
     \draw[bn-arrow] (B) -- (C);
     \end{tikzpicture}
-    \caption{Example of Bayesian Network structure}
+    \caption{Example of Bayesian Network structure.}
 \end{figure}
 \begin{itemize}
     \item Gene $A$ and Gene $B$ are independent;
@@ -132,26 +133,26 @@ Consider the following BN structure:
 \begin{center}
     \begin{minipage}{0.4\textwidth}
         \centering
-        \label{tab:cpdGeneA}
         \begin{tabular}{c|c|c}
             Gene &  Value & P(value)\\ 
             \hline
             A & active   & 0.3\\
             A & inactive & 0.7\\
         \end{tabular}
-        \captionof{table}{CPD for Gene A}
+        \captionof{table}{CPD for Gene A.}
+        \label{tab:cpdGeneA}
     \end{minipage}
     \hfill
     \begin{minipage}{0.4\textwidth}
     \centering
-        \label{tab:cpdGeneB}
         \begin{tabular}{c|c|c}
             Gene &  Value & P(value)\\ 
             \hline
             B & active   & 0.3\\
             B & inactive & 0.7\\
         \end{tabular}
-        \captionof{table}{CPD for Gene B}
+        \captionof{table}{CPD for Gene B.}
+        \label{tab:cpdGeneB}
     \end{minipage}
 \end{center}
 
@@ -169,26 +170,28 @@ Consider the following BN structure:
  & inactive & 0.1 & 0.4 & 0.3 & 0.9 \\
 \hline
 \end{tabular}
-\captionof{table}{Conditional Probability Table for Gene C}
+\captionof{table}{Conditional Probability Table for Gene C.}
 \end{center}
 
 \subsection{D-separation}
-Before introducing the concept of D-separation, we need to better understand the concept of independence and conditional independence.
+Before introducing the concept of D-separation, we need to better understand independence and conditional independence.
 We will then present the basic structures that can appear in a BN.
 
 \subsubsection{Independence and conditional independence}
+\begin{figure}[H]
 \definition{Independence}{
-We usually say that, two variables $a, b$ are independent (written $a \perp b|\empty$) if:
+Two variables $a, b$ are independent (written $a \perp b \mid \emptyset$) if:
     \[ P(a, b) = P(a) P(b) \]
 }
+\end{figure}
 \begin{figure}[H]
 \definition{Conditional independence}{
-    We say that two variables $a, b$ are conditionally independent given a third variable $c$ (written $a \perp b | c$) if:
-    \[ P(a, b | c) = P(a | c) P(b | c) \]
+    We say that two variables $a, b$ are conditionally independent given a third variable $c$ (written $a \perp b \mid c$) if:
+    \[ P(a, b \mid c) = P(a \mid c) P(b \mid c) \]
 }
 \end{figure}
 Both independence and conditional independence can be verified by applying basic rules of probability.
-Instead, BN allow to verify this properties through the concept of D-separation.
+Instead, BNs allow one to verify these properties through the concept of D-separation.
 
 \subsubsection{Tail-to-tail connection}
 In a tail-to-tail connection, two variables $a$ and $b$ are connected through a common parent variable $c$.
@@ -204,38 +207,39 @@ It is called tail-to-tail because the node $c$ has two outgoing edges (tails) po
     \draw[bn-arrow] (C) -- (A);
     \draw[bn-arrow] (C) -- (B);
     \end{tikzpicture}
-    \caption{Tail-to-tail connection}
+    \caption{Tail-to-tail connection.}
 \end{figure}
 The joint distribution can be expressed as:
 \begin{equation}
     \label{eq:tailToTail}
-    P(a, b, c) = P(a | c) P(b| c) P(c)
+    P(a, b, c) = P(a \mid c) P(b \mid c) P(c)
 \end{equation}
-Given this, we want to understand the Independency relationships between $a$ and $b$:
+Given this, we want to understand the independency relationships between $a$ and $b$:
 \begin{itemize}
     \item \textbf{Independent}: we need to check that $P(a, b) = P(a) P(b)$;
     To do this, we marginalize over $c$, applying the sum rule:
     \[ P(a, b) = \sum_{c} P(a, b, c) \]
     We can then substitute the joint distribution from eq \ref{eq:tailToTail}:
-    \[ P(a, b) = \sum_{c} P(a | c) P(b| c) P(c) \neq P(a) P(b)\]
+    \[ P(a, b) = \sum_{c} P(a \mid c) P(b \mid c) P(c) \neq P(a) P(b)\]
     So $a$ and $b$ are \textbf{not independent}.
-    \item \textbf{Conditionally independent}: we need to check that $P(a, b | c) = P(a | c) P(b | c)$;
+    \item \textbf{Conditionally independent}: we need to check that $P(a, b \mid c) = P(a \mid c) P(b \mid c)$;
     We can apply the product rule:
-    \[ P(a, b | c) = \frac{P(a, b, c)}{P(c)} \]
+    \[ P(a, b \mid c) = \frac{P(a, b, c)}{P(c)} \]
     We can then substitute the joint distribution from eq \ref{eq:tailToTail}:
-    \[ P(a, b | c) = \frac{P(a | c) P(b| c) P(c)}{P(c)} = P(a | c) P(b | c) \]
+    \[ P(a, b \mid c) = \frac{P(a \mid c) P(b \mid c) P(c)}{P(c)} = P(a \mid c) P(b \mid c) \]
     So $a$ and $b$ are \textbf{conditionally independent} given $c$.
 \end{itemize}
 We derive that, if $c$ is observed, $a$ and $b$ become independent.
 \paragraph{Example:}
-A classic example of tail-to-tail connection is the relationship between covid infection $c$, 
+A classic example of tail-to-tail connection is the relationship between COVID infection $c$, 
 and two symptoms: fever $a$ and cough $b$.
-If we observe the covid infection status, knowing whether a patient has a fever provides no 
+If we observe the COVID infection status, knowing whether a patient has a fever provides no 
 additional information about whether they have a cough, and vice versa.
-\\Variable $c$ is a common cause of both symptoms $a$ and $b$.
+
+Variable $c$ is a common cause of both symptoms $a$ and $b$.
 
 \subsubsection{Head-to-tail connection}
-In a head-to-tail connection, variables $a$ is a parent of variable $c$, which is a parent of variable $b$.
+In a head-to-tail connection, variable $a$ is a parent of variable $c$, which is a parent of variable $b$.
 It is called head-to-tail because $c$ has one incoming edge (head) from $a$ and one outgoing edge (tail) to $b$.
 \begin{figure}[H]
 \centering
@@ -248,28 +252,28 @@ It is called head-to-tail because $c$ has one incoming edge (head) from $a$ and 
     \draw[bn-arrow] (A) -- (C);
     \draw[bn-arrow] (C) -- (B);
     \end{tikzpicture}
-    \caption{Head-to-tail connection}
+    \caption{Head-to-tail connection.}
 \end{figure}
 The joint distribution can be expressed as:
-\[ p(a,b,c) = p(b|c) p(c|a) p(a) \]
-Note that, using Bayes' theorem, we can rewrite $p(c|a) p(a)$ as $\frac{p(a|c) p(c)}{p(a)}$, obtaining:
-\[ p(a,b,c) = p(b|c) p(a|c) p(c) \]
-We can note that this is exactly the same form as the tail-to-tail case \ref{eq:tailToTail}.
-Even though it's trivial, we will repeat the independency analysis for clarity.
+\[ p(a,b,c) = p(b \mid c) p(c \mid a) p(a) \]
+Note that, using Bayes' theorem, we can rewrite $p(c \mid a) p(a)$ as $\frac{p(a \mid c) p(c)}{p(a)}$, obtaining:
+\[ p(a,b,c) = p(b \mid c) p(a \mid c) p(c) \]
+This is exactly the same form as the tail-to-tail case \ref{eq:tailToTail}.
+For completeness, we will repeat the independency analysis for clarity.
 \begin{itemize}
     \item \textbf{Independent}: we need to check that $P(a, b) = P(a) P(b)$;
-    \[ P(a, b) = \sum_{c} P(a, b, c) = \sum_{c} p(b|c) p(c|a) p(a) \neq P(a) P(b)\]
+    \[ P(a, b) = \sum_{c} P(a, b, c) = \sum_{c} p(b \mid c) p(c \mid a) p(a) \neq P(a) P(b)\]
     So $a$ and $b$ are \textbf{not independent}.
-    \item \textbf{Conditionally independent}: we need to check that $P(a, b | c) = P(a | c) P(b | c)$;
-    \[ P(a, b | c) = \frac{P(a, b, c)}{P(c)} = \frac{p(b|c) p(c|a) p(a)}{P(c)} = P(a | c) P(b | c) \]
+    \item \textbf{Conditionally independent}: we need to check that $P(a, b \mid c) = P(a \mid c) P(b \mid c)$;
+    \[ P(a, b \mid c) = \frac{P(a, b, c)}{P(c)} = \frac{p(b \mid c) p(c \mid a) p(a)}{P(c)} = P(a \mid c) P(b \mid c) \]
     So $a$ and $b$ are \textbf{conditionally independent} given $c$.
 \end{itemize}
 Intuitively, if we already know the value of $c$, knowing $a$ provides no additional information about $b$, and vice versa.
-Differently from the tail-to-tail case, here $c$ is an intermediary variable between $a$ and $b$.
+Unlike the tail-to-tail case, here $c$ is an intermediary variable between $a$ and $b$.
 \paragraph{Example:}
 A classic example of head-to-tail connection is the relationship between cloud coverage $a$, rain $c$, and getting wet $b$.
 If we observe whether it is raining, knowing whether there is cloud coverage provides no additional 
-information about wether we get wet. For both cloudy and clear skies, if it is raining we will get wet.
+information about whether we get wet. For both cloudy and clear skies, if it is raining we will get wet.
 
 \subsubsection{Head-to-head connection}
 In a head-to-head connection, variables $a$ and $b$ are both parents of variable $c$.
@@ -285,19 +289,19 @@ It is called head-to-head because $c$ has two incoming edges (heads) from $a$ an
     \draw[bn-arrow] (A) -- (C);
     \draw[bn-arrow] (B) -- (C);
     \end{tikzpicture}
-    \caption{Head-to-head connection}
+    \caption{Head-to-head connection.}
 \end{figure}
 The joint distribution can be expressed as:
-\[ p(a,b,c) = p(c|a,b) p(a) p(b) \]
+\[ p(a,b,c) = p(c\mid a,b) p(a) p(b) \]
 As before, we want to understand the independency relationships between $a$ and $b$:
 \begin{itemize}
     \item \textbf{Independent}:
-    \[ P(a, b) = \sum_{c} P(a, b, c) = \sum_{c} p(c|a,b) p(a) p(b)\]
+    \[ P(a, b) = \sum_{c} P(a, b, c) = \sum_{c} p(c\mid a,b) p(a) p(b)\]
     Remember that summing over all possible values of $c$ gives 1, so:
     \[ P(a, b) = p(a) p(b) \]
     So $a$ and $b$ are \textbf{independent}.
     \item \textbf{Conditionally independent}:
-    \[ P(a, b | c) = \frac{P(a, b, c)}{P(c)} = \frac{p(c|a,b) p(a) p(b)}{P(c)} \neq P(a | c) P(b | c) \]
+    \[ P(a, b \mid c) = \frac{P(a, b, c)}{P(c)} = \frac{p(c\mid a,b) p(a) p(b)}{P(c)} \neq P(a \mid c) P(b \mid c) \]
     So $a$ and $b$ are \textbf{not conditionally independent} given $c$.
 \end{itemize}
 Intuitively, $a$ and $b$ are independent. Observing $c$ creates a dependency between $a$ and $b$.
@@ -308,9 +312,10 @@ A classic example of head-to-head connection is the relationship between burglar
 Burglary and earthquake are independent events and are both causes of the alarm ringing.
 However, if we know that the alarm has rung, observing a burglary makes an earthquake less likely.
 \paragraph{General head-to-head case}
-Let a \textit{descendant} of a node $x$ be any node that can be reached by following directed edges starting from $x$.
+A \textit{descendant} of a node $x$ is any node that can be reached by following directed edges starting from $x$.
 A head-to-head node $c$ unblocks the dependency path between its parents $a$ and $b$ if either $c$ or any of its descendants are observed.
-\\This can be better understood with an example:
+
+This can be better understood with an example:
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
@@ -324,17 +329,14 @@ A head-to-head node $c$ unblocks the dependency path between its parents $a$ and
         \draw[bn-arrow] (B) -- (C);
         \draw[bn-arrow] (C) -- (D);
     \end{tikzpicture}
-    \caption{General head-to-head case}
+    \caption{General head-to-head case.}
 \end{figure}
 In this case, if either $c$ or $d$ are observed, the dependency path between $a$ and $b$ is unblocked, making them dependent.
-For instance, if we take the previous example of burglary, earthquake, and alarm ringing, and 
-add a new variable $d$ representing a call from alarm company.
+For instance, in the previous example of burglary, earthquake, and alarm ringing, adding a new variable $d$ representing a call from the alarm company.
 If we know either that the alarm has rung or that we received a call from the alarm company,
 observing a burglary makes an earthquake less likely and vice versa.
-\\This rule is valid for any descendant of a head-to-head node, but the further down the descendant is in the graph,
-the weaker the dependency between the parents becomes.
 
-\subsubsection{D-separation rules summary}
+This rule is valid for any descendant of a head-to-head node, but the further down the descendant is in the graph, the weaker the dependency between the parents becomes.
 \begin{figure}[H]
     \centering
     \resizebox{0.8\textwidth}{!}{
@@ -346,21 +348,21 @@ the weaker the dependency between the parents becomes.
         % --- SECTION: NO EVIDENCE (TOP) ---
         \node (label_no_ev) at (-7.5, 2) {\textbf{no evidence}};
 
-        % Tail to Tail (Top)
+        % Tail-to-tail (Top)
         \node[dse-node-empty] (c1) at (-4.5, 2.8) {\small $c$};
         \node[dse-node-empty] (a1) at (-5.5, 2) {\small $a$};
         \node[dse-node-empty] (b1) at (-3.5, 2) {\small $b$};
         \draw[arrow] (c1) -- (a1);
         \draw[arrow] (c1) -- (b1);
 
-        % Head to Tail (Top)
+        % Head-to-tail (Top)
         \node[dse-node-empty] (a2) at (-1.7, 2) {\small $a$};
         \node[dse-node-empty] (c2) at (-0.5, 2) {\small $c$};
         \node[dse-node-empty] (b2) at (0.7, 2) {\small $b$};
         \draw[arrow] (a2) -- (c2);
         \draw[arrow] (c2) -- (b2);
 
-        % Head to Head (Top)
+        % Head-to-head (Top)
         \node[dse-node-empty] (a3) at (2.8, 2.8) {\small $a$};
         \node[dse-node-empty] (b3) at (4.2, 2.8) {\small $b$};
         \node[dse-node-empty] (c3) at (3.5, 2) {\small $c$};
@@ -370,21 +372,21 @@ the weaker the dependency between the parents becomes.
         % --- SECTION: EVIDENCE (BOTTOM) ---
         \node (label_ev) at (-7.5, -2) {\textbf{evidence}};
 
-        % Tail to Tail (Bottom)
+        % Tail-to-tail (Bottom)
         \node[dse-node-filled] (c4) at (-4.5, -1.2) {\small $c$};
         \node[dse-node-empty] (a4) at (-5.5, -2) {\small $a$};
         \node[dse-node-empty] (b4) at (-3.5, -2) {\small $b$};
         \draw[arrow] (c4) -- (a4);
         \draw[arrow] (c4) -- (b4);
 
-        % Head to Tail (Bottom)
+        % Head-to-tail (Bottom)
         \node[dse-node-empty] (a5) at (-1.7, -2) {\small $a$};
         \node[dse-node-filled] (c5) at (-0.5, -2) {\small $c$};
         \node[dse-node-empty] (b5) at (0.7, -2) {\small $b$};
         \draw[arrow] (a5) -- (c5);
         \draw[arrow] (c5) -- (b5);
 
-        % Head to Head (Bottom)
+        % Head-to-head (Bottom)
         \node[dse-node-empty] (a6) at (2.8, -1.2) {\small $a$};
         \node[dse-node-empty] (b6) at (4.2, -1.2) {\small $b$};
         \node[dse-node-filled] (c6) at (3.5, -2) {\small $c$};
@@ -400,19 +402,20 @@ the weaker the dependency between the parents becomes.
             \node[dse-small-indep] at (3.5, 2.4) {};
             \node[dse-small-dep] at (3.5, -1.6) {};
             % Vertical Dashed Outlines
-            \node[dse-boundary, label={[label distance=10pt]above:tail to tail}] at (-4.5, 0.1) {};
-            \node[dse-boundary, label={[label distance=10pt]above:head to tail}] at (-0.5, 0.1) {};
-            \node[dse-boundary, label={[label distance=10pt]above:head to head}] at (3.5, 0.4) {};
+            \node[dse-boundary, label={[label distance=10pt]above:tail-to-tail}] at (-4.5, 0.1) {};
+            \node[dse-boundary, label={[label distance=10pt]above:head-to-tail}] at (-0.5, 0.1) {};
+            \node[dse-boundary, label={[label distance=10pt]above:head-to-head}] at (3.5, 0.4) {};
         \end{scope}
         % --- LEGEND ---
         \node[draw, fill=yellow!25, minimum size=4mm, label=right:independent] at (-3, -4.5) {};
         \node[draw, fill=green!30, minimum size=4mm, label=right:dependent] at (1, -4.5) {};
     \end{tikzpicture}
     }
-    \caption{D-separation rules summary}
+    \caption{D-separation rules summary.}
 \end{figure}
 
 \subsubsection{General D-separation criterion}
+\begin{figure}[H]
 \definition{D-separation}{
     \begin{itemize}
         \item Let $\mathcal{G}$ be a BN structure over a set of random variables $\boldsymbol{X}$;
@@ -420,9 +423,10 @@ the weaker the dependency between the parents becomes.
         \item We say that $\boldsymbol{A}$ and $\boldsymbol{B}$ are \textbf{D-separated} given $\boldsymbol{C}$ in $\mathcal{G}$ if
         all paths from any node in $\boldsymbol{A}$ to any node in $\boldsymbol{B}$ are blocked (no information flow possible).
         \item This can also be written as:
-        \[ \text{D-sep}(\boldsymbol{A}, \boldsymbol{B} | \boldsymbol{C}) \]
+        \[ \text{D-sep}(\boldsymbol{A}, \boldsymbol{B} \mid \boldsymbol{C}) \]
         \end{itemize}
 }
+\end{figure}
 A path is considered blocked if it contains at least one node that meets one of the following conditions:
 \begin{itemize}
     \item The arrows on the path meet either in a tail-to-tail or head-to-tail configuration, and the node is in $\boldsymbol{C}$ (observed);
@@ -448,20 +452,20 @@ Consider the following BN structure:
     \draw[bn-arrow] (E) -- (C);
     \draw[bn-arrow] (F) -- (B);
     \end{tikzpicture}
-    \caption{Example of Bayesian Network structure for D-separation}
+    \caption{Example of Bayesian Network structure for D-separation.}
 \end{figure}
-Consider the two following examples:\
+Consider the two following examples:
 \begin{enumerate}
     \item Are $A$ and $B$ D-separated given $C$?
     \begin{itemize}
-        \item Node $F$ is in a tail to tail connection and is not observed. This implies that the path is not blocked;
-        \item Node $E$ is in a head to head connection and is not observed. One of its child ($C$) is observed, meaning
+        \item Node $F$ is in a tail-to-tail connection and is not observed. This implies that the path is not blocked;
+        \item Node $E$ is in a head-to-head connection and is not observed. One of its children ($C$) is observed, meaning
         that they are dependent (the path is not blocked);
         \item Therefore, there exists an unblocked path from $A$ to $B$, so they are \textbf{not D-separated} given $C$.
     \end{itemize}
     \item Are $A$ and $B$ D-separated given $F$?
     \begin{itemize}
-        \item Node $F$ is in a tail to tail connection and is observed. This implies that the path is blocked;
+        \item Node $F$ is in a tail-to-tail connection and is observed. This implies that the path is blocked;
         \item Therefore, all paths from $A$ to $B$ are blocked, so they are \textbf{D-separated} given $F$.
     \end{itemize}
 \end{enumerate}
@@ -473,21 +477,23 @@ Global independencies are all the independencies that can be derived using the D
 We can formally define them as:
 \begin{figure}[H]
 \definition{Global independencies}{
-    \[ \mathcal{I}(\mathcal{G}) = \{ (A \perp B| C): \text{D-sep}(A, B| C) \} \]
+    \[ \mathcal{I}(\mathcal{G}) = \{ (A \perp B \mid C): \text{D-sep}(A, B \mid C) \} \]
 }
 \end{figure}
 
 \subsection{Equivalence Classes}
 Different BN structures can represent the same set of independencies assumptions.
+\begin{figure}[H]
 \definition{I-Equivalence}{
     We say that two BN structures $\mathcal{G}, \mathcal{G'}$ are \textbf{I-equivalent} if they encode the same set of independencies:
     \[ \mathcal{I}(\mathcal{G}) = \mathcal{I}(\mathcal{G'}) \]
 }
-As we have previously seen, for a structure $\mathcal{G}$ to be an I-map for a distribution $p$ it's not
-necessary that $\mathcal{I}(\mathcal{G}) = \mathcal{I}(p)$ (doesn't need to encode all independencies in $p$).
-\\\\As a consequence, also a fully connected graph (no independencies) is an I-map for any distribution $p$ over the same set of variables.
-Such graph is obviously not very useful, as it doesn't provide any information about independencies in $p$.
-\\To overcome this, we can define a \textbf{minimal I-map}.
+\end{figure}
+As we have previously seen, for a structure $\mathcal{G}$ to be an I-map for a distribution $p$ it is not necessary that $\mathcal{I}(\mathcal{G}) = \mathcal{I}(p)$ (does not need to encode all independencies in $p$).
+As a consequence, a fully connected graph (no independencies) is an I-map for any distribution $p$ over the same set of variables. Such a graph is obviously not very useful, as it does not provide any information about independencies in $p$.
+
+To overcome this limitation, we can define a \textbf{minimal I-map}.
+\begin{figure}[H]
 \definition{Minimal I-Map}{
     A BN structure $\mathcal{G}$ is a \textbf{minimal I-map} for a distribution $p$ if:
     \begin{itemize}
@@ -495,24 +501,26 @@ Such graph is obviously not very useful, as it doesn't provide any information a
         \item Removing any edge from $\mathcal{G}$ would result in a graph that is not an I-map for $p$.
     \end{itemize}
 }
-This means it's impossible to remove any edge from $\mathcal{G}$ without introducing independencies that don't hold in $p$.
-Note that a minimal I-map doesn't necessarily encode all independencies in $p$. 
+\end{figure}
+This means it is impossible to remove any edge from $\mathcal{G}$ without introducing independencies that do not hold in $p$.
+Note that a minimal I-map does not necessarily encode all independencies in $p$. 
 For this, we need a stronger definition, namely the \textbf{perfect I-map}.
-
+\begin{figure}[H]
 \definition{Perfect I-Map}{
     We say that a BN structure $\mathcal{G}$ is a \textbf{perfect I-map} for a distribution $p$ if it captures
     all and only the independencies that hold in $p$:
     \[ \mathcal{I}(\mathcal{G}) = \mathcal{I}(p) \]
 }
+\end{figure}
 Unfortunately, not all distributions $p$ admit a perfect I-map, some cannot be perfectly represented by any BN structure.
 \subsection{Building Bayesian Networks}
-Here are a list of practical guidelines to build a BN structure:
+Here is a list of practical guidelines to build a BN structure:
 \begin{itemize}
     \item Get together with domain experts. This allows to gather prior knowledge about the relationships between variables;
-    \item Define variables for both entities that are directly observable and that you are interested in predicting. 
+    \item Define relevant variables for both observable entities and quantities you wish to predict. 
     Also, including latent variables can help to better represent the dependencies in the data;
-    \item For adding edges, follow causal relationships when possible. 
+    \item When adding edges, follow causal relationships when possible. 
     For example, if variable $A$ causes variable $B$, add a directed edge from $A$ to $B$;
-    \item Avoid assigning zero probabilities in the variables distributions.
+    \item Avoid assigning zero probabilities to conditional probability distributions.
     \item If data is available, we can use structure learning algorithms to learn the BN structure from data.
 \end{itemize}
