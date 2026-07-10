@@ -27,25 +27,7 @@ Each variable $\boldsymbol{x}_i$ is independent of its non-descendants given its
 
 \begin{figure}[H]
 \centering
-    \begin{tikzpicture}
-    % Nodes
-    \node[bn-node] (x1) at (0, 3.5) {$x_1$};
-    \node[bn-node] (x2) at (-1.4, 2.8) {$x_2$};
-    \node[bn-node] (x3) at (1.4, 2.8) {$x_3$};
-    \node[bn-node] (x4) at (-0.8, 1.5) {$x_4$};
-    \node[bn-node] (x5) at (0.8, 1.5) {$x_5$};
-    \node[bn-node] (x6) at (-1.2, 0) {$x_6$};
-    \node[bn-node] (x7) at (0.8, 0) {$x_7$};
-    % Edges
-    \draw[bn-arrow] (x1) -- (x4);
-    \draw[bn-arrow] (x1) -- (x5);
-    \draw[bn-arrow] (x2) -- (x4);
-    \draw[bn-arrow] (x3) -- (x4);
-    \draw[bn-arrow] (x3) -- (x5);
-    \draw[bn-arrow] (x4) -- (x6);
-    \draw[bn-arrow] (x4) -- (x7);
-    \draw[bn-arrow] (x5) -- (x7);
-    \end{tikzpicture}
+    \subimport{tikz/}{example-bn}
     \caption{Example of Bayesian Network.}
 \end{figure}
 \subsubsection{Independency Map}
@@ -115,15 +97,7 @@ $P$ must factorize according to $\mathcal{G}$:
 Consider the following BN structure:
 \begin{figure}[H]
 \centering
-    \begin{tikzpicture}
-    % Nodes
-    \node[bn-node] (A) at (-2, 1) {A};
-    \node[bn-node] (B) at (2, 1) {B};
-    \node[bn-node] (C) at (0, -1) {C};
-    % Edges
-    \draw[bn-arrow] (A) -- (C);
-    \draw[bn-arrow] (B) -- (C);
-    \end{tikzpicture}
+    \subimport{tikz/}{example-bn-structure}
     \caption{Example of Bayesian Network structure.}
 \end{figure}
 \begin{itemize}
@@ -198,15 +172,7 @@ In a tail-to-tail connection, two variables $a$ and $b$ are connected through a 
 It is called tail-to-tail because the node $c$ has two outgoing edges (tails) pointing to $a$ and $b$.
 \begin{figure}[H]
 \centering
-    \begin{tikzpicture}
-    % Nodes
-    \node[bn-node] (C) at (0, 1) {c};
-    \node[bn-node] (A) at (-2, -1) {a};
-    \node[bn-node] (B) at (2, -1) {b};
-    % Edges
-    \draw[bn-arrow] (C) -- (A);
-    \draw[bn-arrow] (C) -- (B);
-    \end{tikzpicture}
+    \subimport{tikz/}{tail-to-tail-connection}
     \caption{Tail-to-tail connection.}
 \end{figure}
 The joint distribution can be expressed as:
@@ -243,15 +209,7 @@ In a head-to-tail connection, variable $a$ is a parent of variable $c$, which is
 It is called head-to-tail because $c$ has one incoming edge (head) from $a$ and one outgoing edge (tail) to $b$.
 \begin{figure}[H]
 \centering
-    \begin{tikzpicture}
-    % Nodes
-    \node[bn-node] (A) at (-2, 0) {a};
-    \node[bn-node] (C) at (0, 0) {c};
-    \node[bn-node] (B) at (2, 0) {b};
-    % Edges
-    \draw[bn-arrow] (A) -- (C);
-    \draw[bn-arrow] (C) -- (B);
-    \end{tikzpicture}
+    \subimport{tikz/}{head-to-tail-connection}
     \caption{Head-to-tail connection.}
 \end{figure}
 The joint distribution can be expressed as:
@@ -280,15 +238,7 @@ In a head-to-head connection, variables $a$ and $b$ are both parents of variable
 It is called head-to-head because $c$ has two incoming edges (heads) from $a$ and $b$.
 \begin{figure}[H]
 \centering
-    \begin{tikzpicture}
-    % Nodes
-    \node[bn-node] (A) at (-2, 0) {a};
-    \node[bn-node] (B) at (2, 0) {b};
-    \node[bn-node] (C) at (0, -2) {c};
-    % Edges
-    \draw[bn-arrow] (A) -- (C);
-    \draw[bn-arrow] (B) -- (C);
-    \end{tikzpicture}
+    \subimport{tikz/}{head-to-head-connection}
     \caption{Head-to-head connection.}
 \end{figure}
 The joint distribution can be expressed as:
@@ -318,17 +268,7 @@ A head-to-head node $c$ unblocks the dependency path between its parents $a$ and
 This can be better understood with an example:
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-        % Nodes
-        \node[bn-node] (A) at (-1.5, 1) {a};
-        \node[bn-node] (B) at (1.5, 1) {b};
-        \node[bn-node] (C) at (0, 0) {c};
-        \node[bn-node] (D) at (0, -1.2) {d};
-        % Edges
-        \draw[bn-arrow] (A) -- (C);
-        \draw[bn-arrow] (B) -- (C);
-        \draw[bn-arrow] (C) -- (D);
-    \end{tikzpicture}
+    \subimport{tikz/}{general-head-to-head}
     \caption{General head-to-head case.}
 \end{figure}
 In this case, if either $c$ or $d$ are observed, the dependency path between $a$ and $b$ is unblocked, making them dependent.
@@ -340,76 +280,7 @@ This rule is valid for any descendant of a head-to-head node, but the further do
 \begin{figure}[H]
     \centering
     \resizebox{0.8\textwidth}{!}{
-    \begin{tikzpicture}[
-        node distance=1cm,
-        % Arrow Style
-        arrow/.style={-{Stealth[scale=0.5]}, red, thick}
-    ]
-        % --- SECTION: NO EVIDENCE (TOP) ---
-        \node (label_no_ev) at (-7.5, 2) {\textbf{no evidence}};
-
-        % Tail-to-tail (Top)
-        \node[dse-node-empty] (c1) at (-4.5, 2.8) {\small $c$};
-        \node[dse-node-empty] (a1) at (-5.5, 2) {\small $a$};
-        \node[dse-node-empty] (b1) at (-3.5, 2) {\small $b$};
-        \draw[arrow] (c1) -- (a1);
-        \draw[arrow] (c1) -- (b1);
-
-        % Head-to-tail (Top)
-        \node[dse-node-empty] (a2) at (-1.7, 2) {\small $a$};
-        \node[dse-node-empty] (c2) at (-0.5, 2) {\small $c$};
-        \node[dse-node-empty] (b2) at (0.7, 2) {\small $b$};
-        \draw[arrow] (a2) -- (c2);
-        \draw[arrow] (c2) -- (b2);
-
-        % Head-to-head (Top)
-        \node[dse-node-empty] (a3) at (2.8, 2.8) {\small $a$};
-        \node[dse-node-empty] (b3) at (4.2, 2.8) {\small $b$};
-        \node[dse-node-empty] (c3) at (3.5, 2) {\small $c$};
-        \draw[arrow] (a3) -- (c3);
-        \draw[arrow] (b3) -- (c3);
-
-        % --- SECTION: EVIDENCE (BOTTOM) ---
-        \node (label_ev) at (-7.5, -2) {\textbf{evidence}};
-
-        % Tail-to-tail (Bottom)
-        \node[dse-node-filled] (c4) at (-4.5, -1.2) {\small $c$};
-        \node[dse-node-empty] (a4) at (-5.5, -2) {\small $a$};
-        \node[dse-node-empty] (b4) at (-3.5, -2) {\small $b$};
-        \draw[arrow] (c4) -- (a4);
-        \draw[arrow] (c4) -- (b4);
-
-        % Head-to-tail (Bottom)
-        \node[dse-node-empty] (a5) at (-1.7, -2) {\small $a$};
-        \node[dse-node-filled] (c5) at (-0.5, -2) {\small $c$};
-        \node[dse-node-empty] (b5) at (0.7, -2) {\small $b$};
-        \draw[arrow] (a5) -- (c5);
-        \draw[arrow] (c5) -- (b5);
-
-        % Head-to-head (Bottom)
-        \node[dse-node-empty] (a6) at (2.8, -1.2) {\small $a$};
-        \node[dse-node-empty] (b6) at (4.2, -1.2) {\small $b$};
-        \node[dse-node-filled] (c6) at (3.5, -2) {\small $c$};
-        \draw[arrow] (a6) -- (c6);
-        \draw[arrow] (b6) -- (c6);
-
-        % --- BACKGROUND LAYERS ---
-        \begin{scope}[on background layer]
-            % Large Horizontal Ellipses
-            \node[dse-dep-bg] at (-2.4, 2.2) {};
-            \node[dse-indep-bg] at (-2.4, -1.9) {};
-            % Small Individual Ellipses (Right Side)
-            \node[dse-small-indep] at (3.5, 2.4) {};
-            \node[dse-small-dep] at (3.5, -1.6) {};
-            % Vertical Dashed Outlines
-            \node[dse-boundary, label={[label distance=10pt]above:tail-to-tail}] at (-4.5, 0.1) {};
-            \node[dse-boundary, label={[label distance=10pt]above:head-to-tail}] at (-0.5, 0.1) {};
-            \node[dse-boundary, label={[label distance=10pt]above:head-to-head}] at (3.5, 0.4) {};
-        \end{scope}
-        % --- LEGEND ---
-        \node[draw, fill=yellow!25, minimum size=4mm, label=right:independent] at (-3, -4.5) {};
-        \node[draw, fill=green!30, minimum size=4mm, label=right:dependent] at (1, -4.5) {};
-    \end{tikzpicture}
+    \subimport{tikz/}{d-separation-summary}
     }
     \caption{D-separation rules summary.}
 \end{figure}
@@ -439,19 +310,7 @@ If $\boldsymbol{A}$ and $\boldsymbol{B}$ are D-separated given $\boldsymbol{C}$,
 Consider the following BN structure:
 \begin{figure}[H]
 \centering
-    \begin{tikzpicture}
-    % Nodes
-    \node[bn-node] (A) at (-1.5, 1) {A};
-    \node[bn-node] (F) at (1.5, 1) {F};
-    \node[bn-node] (E) at (0, 0) {E};
-    \node[bn-node] (B) at (3, 0) {B};
-    \node[bn-node] (C) at (0, -1) {C};
-    % Edges
-    \draw[bn-arrow] (A) -- (E);
-    \draw[bn-arrow] (F) -- (E);
-    \draw[bn-arrow] (E) -- (C);
-    \draw[bn-arrow] (F) -- (B);
-    \end{tikzpicture}
+    \subimport{tikz/}{example-bn-dsep}
     \caption{Example of Bayesian Network structure for D-separation.}
 \end{figure}
 Consider the two following examples:

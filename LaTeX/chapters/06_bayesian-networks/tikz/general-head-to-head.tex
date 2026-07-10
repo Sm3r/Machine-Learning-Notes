@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+    % Nodes
+    \node[bn-node] (A) at (-1.5, 1) {a};
+    \node[bn-node] (B) at (1.5, 1) {b};
+    \node[bn-node] (C) at (0, 0) {c};
+    \node[bn-node] (D) at (0, -1.2) {d};
+    % Edges
+    \draw[bn-arrow] (A) -- (C);
+    \draw[bn-arrow] (B) -- (C);
+    \draw[bn-arrow] (C) -- (D);
+\end{tikzpicture}

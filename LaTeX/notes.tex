@@ -3,10 +3,10 @@
 \numberwithin{equation}{section} % Equations are numbered per section
 
 \title{\Huge \textbf{Machine Learning}\\ \Large{Passerini Andrea\\a.y. 2025/2026\\University of Trento\\[2cm]}}
-\author{Davide Donà}
+\author{\href{https://davide-dona.github.io}{Davide Donà}}
 \date{
     \MonthName\ \number\year \\[0.5em]
-    \small\textcolor{gray}{\href{https://github.com/446f6e6e79/Machine-Learning-Notes}{Notes Repository}}
+    \small\textcolor{gray}{\href{https://github.com/davide-dona/Machine-Learning-Notes}{Notes Repository}}
 }
 \begin{document}
 % Set the page numbering to roman numerals
@@ -20,22 +20,38 @@
 
 % Change the page numbering to arabic
 \pagenumbering{arabic}
-\include{sections/Introduction}
-\include{sections/DecisionTree}
-\include{sections/K-Nearest-Neighbours}
-\include{sections/Evaluation}
-\include{sections/ParameterEstimation}
-\include{sections/BayesianNetwork}
-\include{sections/LearningBN}
-\include{sections/NaiveBayes}
-\include{sections/LinearDiscriminantFunctions}
-\include{sections/Perceptron}
-\include{sections/SVM.tex}
-\include{sections/KernelMachines.tex}
-\include{sections/NeuralNetworks.tex}
-\include{sections/Clustering.tex}
-\include{sections/ReinforcementLearning.tex}
-\include{sections/Ensemble-methods.tex}
+\subimport{chapters/01_introduction/}{index}
+\clearpage
+\subimport{chapters/02_decision-tree/}{index}
+\clearpage
+\subimport{chapters/03_k-nearest-neighbours/}{index}
+\clearpage
+\subimport{chapters/04_evaluation/}{index}
+\clearpage
+\subimport{chapters/05_parameter-estimation/}{index}
+\clearpage
+\subimport{chapters/06_bayesian-networks/}{index}
+\clearpage
+\subimport{chapters/07_learning-bayesian-networks/}{index}
+\clearpage
+\subimport{chapters/08_naive-bayes/}{index}
+\clearpage
+\subimport{chapters/09_linear-discriminant-functions/}{index}
+\clearpage
+\subimport{chapters/10_perceptron/}{index}
+\clearpage
+\subimport{chapters/11_svm/}{index}
+\clearpage
+\subimport{chapters/12_kernel-machines/}{index}
+\clearpage
+\subimport{chapters/13_neural-networks/}{index}
+\clearpage
+\subimport{chapters/14_clustering/}{index}
+\clearpage
+\subimport{chapters/15_reinforcement-learning/}{index}
+\clearpage
+\subimport{chapters/16_ensemble-methods/}{index}
+\clearpage
 \appendix
-\include{sections/Appendix.tex}
+\subimport{chapters/17_appendix/}{index}
 \end{document}

@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+% Nodes
+\node[bn-node] (x1) at (0, 3.5) {$x_1$};
+\node[bn-node] (x2) at (-1.4, 2.8) {$x_2$};
+\node[bn-node] (x3) at (1.4, 2.8) {$x_3$};
+\node[bn-node] (x4) at (-0.8, 1.5) {$x_4$};
+\node[bn-node] (x5) at (0.8, 1.5) {$x_5$};
+\node[bn-node] (x6) at (-1.2, 0) {$x_6$};
+\node[bn-node] (x7) at (0.8, 0) {$x_7$};
+% Edges
+\draw[bn-arrow] (x1) -- (x4);
+\draw[bn-arrow] (x1) -- (x5);
+\draw[bn-arrow] (x2) -- (x4);
+\draw[bn-arrow] (x3) -- (x4);
+\draw[bn-arrow] (x3) -- (x5);
+\draw[bn-arrow] (x4) -- (x6);
+\draw[bn-arrow] (x4) -- (x7);
+\draw[bn-arrow] (x5) -- (x7);
+\end{tikzpicture}

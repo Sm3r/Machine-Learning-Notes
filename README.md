@@ -34,7 +34,6 @@ The notes cover fundamental and advanced topics in Machine Learning.
 | **Kernel Machines** | Feature maps, Kernel trick, valid kernels, Gram matrix, Kernel on graphs |
 | **Neural Networks** | Multiple Layer Perceptrons, backpropagation, activation functions, regularization, other modern architectures |
 | **Unsupervised Learning** | Clustering, K-Means, EM-Clustering, Hierarchical Clustering, choosing n. of clusters |
-| **Unsupervised Learning** | Clustering, K-Means, EM-Clustering, Hierarchical Clustering, choosing n. of clusters |
 | **Reinforcement Learning** | Markov Decision Processes, Utilities, Value Iteration, Policy Iteration, Unknown MDPs, ADP, TD Learning, SARSA, Q-Learning |
 
 
@@ -51,8 +50,8 @@ Contributions are welcome! Here's how you can help:
 ###  Pull Requests
 1. **Fork** this repository.
 2. Create a new branch: `git checkout -b fix/your-description`.
-3. Make your changes (edit the `.tex` files under `sections/`).
-4. Make sure the project **compiles without errors**: `latexmk -pdf main.tex`.
+3. Make your changes (edit the `.tex` files under `LaTeX/chapters/<NN_name>/index.tex`).
+4. Make sure the project **compiles without errors**: `cd LaTeX && latexmk -pdf notes.tex`.
 5. **Commit** with a descriptive message and **push** your branch.
 6. Open a **Pull Request** against `main`.
 

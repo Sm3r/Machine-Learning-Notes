@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+\begin{axis}[
+    title={Optimal number of clusters},
+    xlabel={Number of clusters $k$},
+    ylabel={Sum of Squared Error $E(k)$},
+    xmin=1, xmax=10,
+    ymin=0, ymax=210,
+    xtick={1,2,3,4,5,6,7,8,9,10},
+    ytick={50,100,150,200},
+    grid=none,
+    axis lines=left,
+    title style={at={(0.5,1.1)}, anchor=center, font=\bfseries\large},
+]
+% The Data Points
+\addplot[color=blue!70!black,mark=*,thick,]
+coordinates {
+    (1,195) (2,105) (3,80) (4,58) (5,50) (6,45) (7,42) (8,38) (9,40) (10,30)
+};
+% The Vertical Dashed "Elbow" Line at k=4
+\draw [dashed, thick, gray] (axis cs:4,0) -- (axis cs:4,200);
+\end{axis}
+\end{tikzpicture}

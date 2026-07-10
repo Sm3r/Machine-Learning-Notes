@@ -1,0 +1,48 @@
+\begin{tikzpicture}[
+    dot/.style={circle, draw=black, fill=white, inner sep=2pt},
+    square/.style={rectangle, draw=black, fill=black, inner sep=2pt},
+    >=Stealth
+]
+% --- Left Side: Input Space (2D) ---
+\draw[->] (-2,0) -- (2,0) node[right] {$x_1$};
+\draw[->] (0,-2) -- (0,2) node[above] {$x_2$};
+% Circles
+\node[dot] at (-1.2, 1) {};
+\node[dot] at (0.5, 1.3) {};
+\node[dot] at (1.2, 1.1) {};
+\node[dot] at (1.4, 0.4) {};
+\node[dot] at (0.9, -0.7) {};
+\node[dot] at (-1.3, -0.9) {};
+\node[dot] at (-1.5, 0) {};
+% squares
+\node[square] at (-0.3, 0.3) {};
+\node[square] at (0.4, 0.4) {};
+\node[square] at (0.2, -0.3) {};
+\node[square] at (-0.5, -0.6) {};
+
+% --- The Mapping Arrow ---
+\draw[->, bend left=40, thick] (1, 2) to node[above=5pt] {$\Phi$} (5.8, 2.1);
+
+% --- Right Side: Feature Space (3D) ---
+\begin{scope}[xshift=7cm, yshift=0cm, scale=1.2]
+    % 3D Axes
+    \draw[->] (-1.5, 0) -- (2, 0) node[right] {$\Phi(x)_1$};
+    \draw[->] (0, -1.5) -- (0, 2) node[above] {$\Phi(x)_2$};
+    \draw[->] (-1.5, -1.5) -- (1.5, 1.5) node[right] {$\Phi(x)_3$};
+    % Hyperplane
+    \draw[thick, fill=gray!5, fill opacity=0.5] (-2.5, -0.5) -- (1, -0.5) -- (2.8, 1.3) -- (-0.7, 1.3) -- cycle;
+    % Circles below the plane
+    \node[dot] at (-1.2, -0.8) {};
+    \node[dot] at (-0.2, -1.2) {};
+    \node[dot] at (0.5, -0.7) {};
+    \node[dot] at (0.9, -1.2) {};
+    \node[dot] at (1.5, -0.7) {};
+    \node[dot] at (-0.5, -0.7) {};
+    \node[dot] at (-0.7, -1.2) {};
+    % Squares above the plane
+    \node[square] at (0.6, 1.5) {};
+    \node[square] at (1.5, 1.2) {};
+    \node[square] at (1.1, 0.4) {};
+    \node[square] at (-0.5, 0.8) {};
+\end{scope}
+\end{tikzpicture}

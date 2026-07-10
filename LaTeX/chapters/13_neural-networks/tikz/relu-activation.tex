@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = middle,
+    xlabel = {$z = \mathbf{w}^\top \mathbf{x}$},
+    ylabel = {$f(z)$},
+    ymin = -1, ymax = 6,
+    samples = 200,
+    domain = -4:4,
+    width=10cm,
+    height=6cm,
+    thick,
+]
+\addplot[blue] {(x > 0) * x};
+\end{axis}
+\end{tikzpicture}

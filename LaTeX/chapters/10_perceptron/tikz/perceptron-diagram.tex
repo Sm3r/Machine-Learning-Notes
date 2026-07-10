@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+    \node[input-node] (bias) at (0, 2) {1};
+    \node[left=0.2cm of bias] {\textbf{Bias}};
+
+    \node[input-node] (x1) at (0, 1) {$x^1$};
+    \node[input-node] (x2) at (0, 0) {$x^2$};
+    \node (dots) at (0, -0.8) {$\vdots$};
+    \node[input-node] (xm) at (0, -1.8) {$x^m$};
+
+    \node[left=0.5cm of x2] (inputs-label) {Inputs};
+
+    % 2. Draw Summation and Activation Nodes
+    \node[sum-node] (sum) at (4, 0.4) {\Large $\Sigma$};
+    \node[activation-node, right=1.2cm of sum] (act) {
+        \begin{tikzpicture}[scale=0.2]
+            \draw[blue, thick] (-1,-1) -- (0,-1) -- (0,1) -- (1,1);
+        \end{tikzpicture}
+    };
+    % Connection
+    \draw[connection] (bias) -- (sum) node[midway, above] {$w_0$};
+    \draw[connection] (x1) -- (sum) node[midway, above] {$w_1$};
+    \draw[connection] (x2) -- (sum) node[midway, above] {$w_2$};
+    \draw[connection] (xm) -- (sum) node[midway, above] {$w_m$};
+    \draw[connection] (sum) -- (act);
+    \draw[connection] (act) -- ++(2,0) node[right] {Output};
+
+    \node[above=0.3cm of act] {Activation func};
+
+\end{tikzpicture}

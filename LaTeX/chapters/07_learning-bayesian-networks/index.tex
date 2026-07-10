@@ -30,45 +30,7 @@ Where:
 Graphically, we can represent the likelihood as follows:
 \begin{figure}[H]
 \centering
-    \begin{tikzpicture}[
-      bn-node/.style={circle, draw=red, thick, minimum size=10pt, inner sep=1pt, font=\scriptsize}
-    ]
-    % Theta nodes
-    \node[bn-theta] (TC) at (0, 2.8) {$\theta_1$};
-    \node[bn-theta] (TA) at (-2, -1.4) {$\theta_{2}|1$};
-    \node[bn-theta] (TB) at (2, -1.4) {$\theta_{3}|1$};
-    % Nodes
-    \node[bn-node] (C1) at (-4, 1.4) {$X_1(1)$};
-    \node[bn-node] (A1) at (-5, 0) {$X_2(1)$};
-    \node[bn-node] (B1) at (-3, 0) {$X_3(1)$};
-
-    \node[bn-node] (C2) at (0, 1.4) {$X_1(2)$};
-    \node[bn-node] (A2) at (-1, 0) {$X_2(2)$};
-    \node[bn-node] (B2) at (1, 0) {$X_3(2)$};
-
-    \node[bn-node] (CN) at (4, 1.4) {$X_1(N)$};
-    \node[bn-node] (AN) at (5, 0) {$X_2(N)$};
-    \node[bn-node] (BN) at (3, 0) {$X_3(N)$};
-
-    % Edges
-    \draw[bn-arrow] (C1) -- (A1);
-    \draw[bn-arrow] (C1) -- (B1);
-    \draw[bn-arrow] (C2) -- (A2);
-    \draw[bn-arrow] (C2) -- (B2);
-    \draw[bn-arrow] (CN) -- (AN);
-    \draw[bn-arrow] (CN) -- (BN);
-    
-    % Theta edges
-    \draw[bn-arrow] (TC) -- (C1);
-    \draw[bn-arrow] (TC) -- (C2);
-    \draw[bn-arrow] (TC) -- (CN);
-    \draw[bn-arrow] (TA) -- (A1);
-    \draw[bn-arrow] (TA) -- (A2);
-    \draw[bn-arrow] (TA) -- (AN);
-    \draw[bn-arrow] (TB) -- (B1);
-    \draw[bn-arrow] (TB) -- (B2);
-    \draw[bn-arrow] (TB) -- (BN);
-    \end{tikzpicture}
+    \subimport{tikz/}{complete-data-representation}
     \caption{Complete data representation}
 \end{figure}
 The probability $p(\boldsymbol{x}_j(i) | pa_j(i), \theta)$ only depends on the parameters $\theta_{X_j|Pa_j}$,

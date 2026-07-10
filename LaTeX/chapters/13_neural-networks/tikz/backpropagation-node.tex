@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+    \node[input-node] (x1) at (0, 1.8) {};
+    \node (dots) at (0, 1) {$\vdots$};
+    \node[input-node, label=above right:$\phi_j$] (pred) at (0, 0) {$x_j$};
+    \node (dots) at (0, -0.8) {$\vdots$};
+    \node[input-node] (xm) at (0, -1.8) {};
+    \node[left=0.5cm of x2] (inputs-label) {Input node $j$};
+
+    % Node l
+    \node[circle, draw, minimum size=4cm, label=above:$x_l$] (node_l) at (5, 0) {};
+    \node[sum-node] (sum) at (4, 0) {\Large $\Sigma$};
+    \node[activation-node, right=1.2cm of sum] (act) {
+        \begin{tikzpicture}[scale=0.2]
+            \draw[blue, thick] (-1,-1) -- (0,-1) -- (0,1) -- (1,1);
+        \end{tikzpicture}
+    };
+
+    % Connection
+    \draw[connection] (x1) -- (sum) node[midway, above] {};
+    \draw[connection] (x2) -- (sum) node[midway, above] {$w_{lj}$};
+    \draw[connection] (xm) -- (sum) node[midway, above] {};
+    \draw[connection] (sum) -- (act) node[midway, above] {$a_l$};
+    \draw[connection] (act) -- ++(1,0) node[right] {$\phi_l$};
+\end{tikzpicture}

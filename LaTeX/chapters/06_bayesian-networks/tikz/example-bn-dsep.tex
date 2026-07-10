@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+% Nodes
+\node[bn-node] (A) at (-1.5, 1) {A};
+\node[bn-node] (F) at (1.5, 1) {F};
+\node[bn-node] (E) at (0, 0) {E};
+\node[bn-node] (B) at (3, 0) {B};
+\node[bn-node] (C) at (0, -1) {C};
+% Edges
+\draw[bn-arrow] (A) -- (E);
+\draw[bn-arrow] (F) -- (E);
+\draw[bn-arrow] (E) -- (C);
+\draw[bn-arrow] (F) -- (B);
+\end{tikzpicture}
